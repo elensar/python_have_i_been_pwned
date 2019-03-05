@@ -1,4 +1,4 @@
-#!/usr/bin/python3.7.1
+#!/usr/bin/python3.7
 # -*- encoding: utf-8 -*-
 
 import hashlib
