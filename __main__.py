@@ -2,7 +2,11 @@
 # -*- encoding: utf-8 -*-
 
 import argparse
+
+import utils
+from utils import gui
 from views import console_input
+from views.MainViewModel import MainViewModel
 
 parser = argparse.ArgumentParser(allow_abbrev=False)
 parser.add_argument(
@@ -15,9 +19,19 @@ parser.add_argument(
     '-sr',
     '--show_results',
     help='Show all results.',
-    type=bool,
-    default=False
+    action='store_true'
+)
+parser.add_argument(
+    '-g',
+    '--gui',
+    help='Show program with GUI.',
+    action='store_true'
 )
 
 args = parser.parse_args()
-console_input.check_password(args.password, args.show_results)
+
+if args.gui:
+    appVM = MainViewModel(args.password, args.show_results)
+    gui.showEngine(appVM)
+else:
+    console_input.check_password(args.password, args.show_results)

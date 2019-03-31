@@ -2,38 +2,48 @@
 # -*- encoding: utf-8 -*-
 
 from sys import stdin
+
 from utils import password
 
 def check_password(pre_pwd: str, show_results: bool=False):
-    pwd_input = ''
-    if pre_pwd:
-        pwd_input = pre_pwd
-    else:
-        print('Please enter your password:')
+    check_next_pwd = True
 
-        # rstrip remove just the trailing chars which will be \n
-        # because the user has to enter to continue the check.
-        pwd_input = stdin.readline().rstrip('\n')
+    while check_next_pwd:
+        pwd_input = ''
+        if pre_pwd:
+            pwd_input = pre_pwd
+        else:
+            print('Please enter your password:')
 
-    pwd = password.hash_str_password(pwd_input)
+            # rstrip remove just the trailing chars which will be \n
+            # because the user has to enter to continue the check.
+            pwd_input = stdin.readline().rstrip('\n')
 
-    print(pwd)
-    print()
+        pwd = password.hash_str_password(pwd_input)
 
-    finds = password.send_password_request(pwd)
-
-    if show_results:
-        print('Results:')
-        for item in finds:
-            print(f'{item.pwd_id:3d} - {item.password}: finds: {item.count:4d}')
-
+        print(pwd)
         print()
 
-    pwd_info = password.is_password_in_results(pwd, finds)
-    if not pwd_info:
-        print('Nothing found!')
-    else:
+        finds = password.send_password_request(pwd)
+
         if show_results:
-            print(f'pwd id: {pwd_info.pwd_id} count: {pwd_info.count}')
+            print('Results:')
+            for item in finds:
+                print(f'{item.pwd_id:3d} - {item.password}: finds: {item.count:4d}')
+
+            print()
+
+        pwd_info = password.is_password_in_results(pwd, finds)
+        if not pwd_info:
+            print('Nothing found!')
         else:
-            print(f'count: {pwd_info.count}')
+            if show_results:
+                print(f'pwd id: {pwd_info.pwd_id} count: {pwd_info.count}')
+            else:
+                print(f'count: {pwd_info.count}')
+
+        print()
+        print('Try an other Password? (Yes / no):')
+        try_new_pwd = stdin.readline().rstrip('\n').lower()
+        if try_new_pwd in [ 'n', 'no' ]:
+            check_next_pwd = False

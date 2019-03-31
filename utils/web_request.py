@@ -3,6 +3,7 @@
 
 import urllib3
 from typing import Iterable
+
 from utils.password_info import password_info
 
 PWND_API_URL = 'https://api.pwnedpasswords.com/range/{0}'
