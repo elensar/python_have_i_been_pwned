@@ -3,8 +3,6 @@
 
 import argparse
 
-import utils
-from utils import gui
 from views import console_input
 from views.MainViewModel import MainViewModel
 
@@ -32,6 +30,6 @@ args = parser.parse_args()
 
 if args.gui:
     appVM = MainViewModel(args.password, args.show_results)
-    gui.showEngine(appVM)
+    appVM.show_engien()
 else:
     console_input.check_password(args.password, args.show_results)

@@ -73,7 +73,7 @@ ApplicationWindow {
 
             Button {
                 text: qsTr('&Apply')
-                onClicked: appVM.apply('test')
+                onClicked: appVM.apply()
             }
         }
     }

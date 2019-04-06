@@ -4,8 +4,9 @@
 from PySide2.QtCore import QObject, Signal, Property, QUrl, Slot
 
 from utils import password
+from utils.viewModelBase import ViewModelBase
 
-class MainViewModel(QObject):
+class MainViewModel(ViewModelBase):
     textChanged = Signal(str)
     boolChanged = Signal(bool)
 
@@ -21,8 +22,8 @@ class MainViewModel(QObject):
         self.m_password_hash = '<leer>'
         self.m_result = '<leer>'
 
-    def ViewFileName(self):
-        return __file__.replace('Model.py', '') + '.qml'
+    def get_file_name(self):
+        return __file__
 
     @Property(str, notify=textChanged)
     def password(self) -> str:
